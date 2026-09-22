@@ -1,0 +1,23 @@
+# Public repository ignore rules
+
+# Private archive material intentionally kept outside the public commit.
+_private_archive/
+
+# Local/editor/build output.
+.vscode/
+.idea/
+**/build/
+**/CMakeFiles/
+*.elf
+*.map
+*.hex
+*.o
+*.d
+
+# Local machine and secret files.
+.env
+*.pem
+*.key
+*.p12
+.DS_Store
+Thumbs.db

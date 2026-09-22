@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.13)
+if(NOT DEFINED PICO_BOARD)
+    set(PICO_BOARD pico CACHE STRING "Pico board target")
+endif()
+include(${CMAKE_CURRENT_LIST_DIR}/pico_sdk_import.cmake)
+project(drx280_status_mapping C CXX ASM)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+pico_sdk_init()
+add_executable(drx280_status_mapping main.c panel.c gamepad.c usb_descriptors.c)
+target_include_directories(drx280_status_mapping PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(drx280_status_mapping pico_stdlib)
+set_source_files_properties(main.c panel.c PROPERTIES COMPILE_OPTIONS "-Wall;-Wextra;-Wpedantic;-Werror")
+set_source_files_properties(usb_descriptors.c PROPERTIES COMPILE_OPTIONS "-Wall;-Wextra;-Werror")
+set_source_files_properties(gamepad.c PROPERTIES COMPILE_OPTIONS "-Wall;-Wextra;-Werror")
+target_compile_definitions(drx280_status_mapping PRIVATE
+    PICO_STDIO_DEADLOCK_TIMEOUT_MS=0
+    PICO_STDIO_USB_STDOUT_TIMEOUT_US=0
+    PICO_STDIO_USB_USE_DEFAULT_DESCRIPTORS=0
+    PICO_STDIO_USB_ENABLE_RESET_VIA_VENDOR_INTERFACE=0)
+pico_enable_stdio_usb(drx280_status_mapping 1)
+pico_enable_stdio_uart(drx280_status_mapping 0)
+pico_set_program_name(drx280_status_mapping "DRX280 Status Mapping")
+pico_set_program_version(drx280_status_mapping "1.3.0-status-map-sw")
+pico_add_extra_outputs(drx280_status_mapping)

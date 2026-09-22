@@ -1,0 +1,8 @@
+#ifndef SKY_PANEL_USB_DESCRIPTORS_H
+#define SKY_PANEL_USB_DESCRIPTORS_H
+
+enum {
+    REPORT_ID_GAMEPAD = 1
+};
+
+#endif
